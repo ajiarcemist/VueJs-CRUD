@@ -9,11 +9,15 @@ export const useTodoStore = defineStore('todo', {
       { name: 'Belajar PHP', isDone: false }
     ]
   }),
-  getters: {},
   actions: {
-    setAsDone(index) {
-      this.todoList[index].isDone = true
+    addTodo(todo) {
+      this.todoList.push(todo)
     },
-    addTodo() {}
+    toggleTodoStatus(index) {
+      this.todoList[index].isDone = !this.todoList[index].isDone
+    },
+    hapusTodoList(index) {
+      this.todoList.splice(index, 1)
+    }
   }
 })
