@@ -9,6 +9,17 @@ export const useTodoStore = defineStore('todo', {
       { name: 'Belajar PHP', isDone: false }
     ]
   }),
+  getters: {
+    showAll(state) {
+      return state.todoList
+    },
+    doneOnly(state) {
+      return state.todoList.filter((item) => item.isDone === true)
+    },
+    undoneOnly(state) {
+      return state.todoList.filter((item) => item.isDone === false)
+    }
+  },
   actions: {
     addTodo(todo) {
       this.todoList.push(todo)

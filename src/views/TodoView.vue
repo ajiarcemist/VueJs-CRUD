@@ -1,6 +1,6 @@
 <template>
   <div class="container text-center">
-    <h2>ini Halaman To Do List</h2>
+    <h2 class="text-white">Target Kamu</h2>
     <form @submit.prevent="addTodo" class="custom-form">
       <div class="input-wrapper">
         <input
@@ -12,37 +12,42 @@
         <button type="submit" class="btn btn-primary rounded-pill">Add</button>
       </div>
     </form>
-    <ul class="list-unstyled">
-      <li
-        v-for="(list, index) in todoStore.todoList"
-        :key="list.name"
-        :class="{ 'bg-warning-subtle': !list.isDone, 'bg-success': list.isDone }"
-        class="border rounded-3 text-start mb-2 p-2 d-flex justify-content-between align-items-center"
-      >
-        <span>{{ list.name }}</span>
-        <div>
-          <button
-            type="button"
-            class="btn btn-sm"
-            :class="{ 'btn-success': !list.isDone, 'btn-warning': list.isDone }"
-            @click="toggleTodoStatus(index)"
-          >
-            {{ list.isDone ? 'Set as Undone' : 'Set as Done' }}
-          </button>
-          <!-- Use v-if to conditionally render the delete button -->
-          <button type="button" class="mx-3 btn btn-sm btn-danger" @click="hapusTodoList(index)">
-            Hapus
+    <!-- selesai input form -->
+    <div class="container">
+      <div class="d-flex justify-content-evenly mb-3">
+        <div class="">
+          <button @click="show = 'all'" type="button" class="btn-custom-show rounded-4">
+            Show All
           </button>
         </div>
-      </li>
-    </ul>
+        <div class="">
+          <button @click="show = 'done only'" type="button" class="btn-custom-done rounded-4">
+            Done Only
+          </button>
+        </div>
+        <div class="">
+          <button @click="show = 'undone only'" type="button" class="btn-custom-undone rounded-4">
+            Undone Only
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- list todo -->
+    <div v-if="show == 'all'"><listTodo statusTodo="showAll" /></div>
+    <div v-if="show == 'done only'"><listTodo statusTodo="doneOnly" /></div>
+    <div v-if="show == 'undone only'"><listTodo statusTodo="undoneOnly" /></div>
+
+    <!-- akhir list todo -->
   </div>
 </template>
-
 <script>
 import { useTodoStore } from '../stores/todoStore'
+import listTodo from '../components/listTodo.vue'
 
 export default {
+  components: {
+    listTodo
+  },
   setup() {
     const todoStore = useTodoStore()
 
@@ -50,30 +55,22 @@ export default {
   },
   data() {
     return {
-      newTodo: ''
+      newTodo: '',
+      show: 'all'
     }
   },
   methods: {
     addTodo() {
       this.todoStore.addTodo({ name: this.newTodo, isDone: false })
       this.newTodo = ''
-    },
-    toggleTodoStatus(index) {
-      this.todoStore.toggleTodoStatus(index)
-    },
-    hapusTodoList(index) {
-      this.todoStore.hapusTodoList(index)
     }
   }
 }
 </script>
 
 <style scoped>
-/* Add your scoped styles here */
-
 .custom-form {
   padding: 15px;
-
   position: relative;
 }
 
@@ -83,8 +80,9 @@ export default {
 
 .input-wrapper input {
   width: 100%;
-  padding-right: 50px; /* Adjust padding to accommodate the button */
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  padding-right: 50px;
+  box-sizing: border-box;
+  border: 1px solid #ba55d3;
 }
 
 .input-wrapper button {
@@ -93,5 +91,28 @@ export default {
   right: 0;
   transform: translateY(-50%);
   width: 100px;
+  background-color: #ff69b4;
+  border-color: #ff69b4;
+}
+
+.btn-custom-show {
+  background-color: #ffb6c1;
+  border-color: #ffb6c1;
+}
+
+.btn-custom-done {
+  background-color: #9370db;
+  border-color: #9370db;
+}
+
+.btn-custom-undone {
+  background-color: #ffc0cb;
+  border-color: #ffc0cb;
+}
+h2 {
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 600;
+  font-style: normal;
+  font-optical-sizing: auto;
 }
 </style>

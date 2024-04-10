@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <div class="container d-flex flex-column align-items-center justify-content-center vh-100">
-      <div class="border p-4 rounded">
-        <ul class="nav justify-content-center">
-          <li class="nav-item">
-            <RouterLink to="/" class="nav-link">Home</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink to="/about" class="nav-link">About</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink to="/todolist" class="nav-link">To Do List</RouterLink>
-          </li>
-        </ul>
-        <RouterView />
-      </div>
+  <div class="background-gradient d-flex justify-content-center align-items-center min-vh-100">
+    <div class="custom-container">
+      <ul class="nav justify-content-center">
+        <li class="nav-item mx-2">
+          <RouterLink to="/" class="nav-link-custom">Home</RouterLink>
+        </li>
+        <li class="nav-item mx-2">
+          <RouterLink to="/about" class="nav-link-custom">About</RouterLink>
+        </li>
+        <li class="nav-item mx-2">
+          <RouterLink to="/todolist" class="nav-link-custom">To Do List</RouterLink>
+        </li>
+      </ul>
+      <RouterView />
     </div>
   </div>
 </template>
@@ -24,14 +22,40 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <style>
-.border {
-  border: 1px solid #dee2e6;
+.background-gradient {
+  background-image: url('../src/assets/gradient-ungu.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
-.rounded {
+.custom-border {
+  border: 1px solid #ba55d3;
+}
+
+.custom-rounded {
   border-radius: 0.25rem;
 }
-.container {
+.custom-container {
   width: 600px;
+  border: 1px solid #ff69b4;
+}
+
+.nav-link-custom {
+  color: #ffb6c1;
+  text-decoration: none;
+}
+
+.nav-link-custom:hover {
+  color: #ff69b4;
+}
+
+.btn-primary {
+  background-color: #ff69b4;
+  border-color: #ff69b4;
+}
+
+.btn-primary:hover {
+  background-color: #ffb6c1;
+  border-color: #ffb6c1;
 }
 </style>
